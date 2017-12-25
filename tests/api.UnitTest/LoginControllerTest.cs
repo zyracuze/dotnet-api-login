@@ -19,8 +19,10 @@ namespace api.UnitTest
 
             var reponse = Assert.IsType<ResponseMessage>(result);
             var model = Assert.IsAssignableFrom<User>(reponse.Results);
+
             Assert.Equal("ploy", model.Username);
             Assert.Equal("พลอย", model.Displayname);
+            Assert.Equal("OK", reponse.Status);
         }
     }
 }
