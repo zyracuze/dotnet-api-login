@@ -12,13 +12,15 @@
 				{
 					"listen": "test",
 					"script": {
+						"id": "58830610-f53d-4ad5-8b31-d6d10cb1b405",
 						"type": "text/javascript",
 						"exec": [
 							"pm.test(\"Login Success\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.id).to.eql(1);",
-							"    pm.expect(jsonData.username).to.eql('ploy');",
-							"    pm.expect(jsonData.displayname).to.eql('พลอย');",
+							"    pm.expect(jsonData.status).to.eql('OK');",
+							"    pm.expect(jsonData.results.id).to.eql(1);",
+							"    pm.expect(jsonData.results.username).to.eql('ploy');",
+							"    pm.expect(jsonData.results.displayname).to.eql('พลอย');",
 							"});"
 						]
 					}
@@ -37,12 +39,13 @@
 					"raw": "{\n\t\"username\": \"ploy\",\n\t\"password\": \"Sck1234\"\n}"
 				},
 				"url": {
-					"raw": "{{hostname}}:5000/login",
+					"raw": "http://localhost:5000/api/login",
 					"host": [
-						"{{hostname}}"
+						"http://localhost"
 					],
 					"port": "5000",
 					"path": [
+						"api",
 						"login"
 					]
 				}
