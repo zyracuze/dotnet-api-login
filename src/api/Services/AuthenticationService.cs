@@ -2,11 +2,17 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using api.Models;
+using api.Exceptions;
 
 namespace api.Services
 {
   public class AuthenticationService : IAuthenticationService
   {
+
+    private readonly UserContext userContext;
+    public AuthenticationService(UserContext userContext){
+        this.userContext = userContext;
+    }
     private string EncryptPassword(string password)
     {
       StringBuilder sb = new StringBuilder();
@@ -29,14 +35,15 @@ namespace api.Services
       }
 
       string hashPassword = this.EncryptPassword(password);
-
-
-      return new User()
+      try
       {
-        Id = 1,
-        Username = "ploy",
-        Displayname = "พลอย"
-      };
+          return userContext.FindUserByUsernameAndPassword(username, hashPassword);
+      }
+      catch (System.Exception)
+      {
+          
+          throw new UserNotFoundException("User not found");
+      }
     }
   }
 }
