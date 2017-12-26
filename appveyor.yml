@@ -15,7 +15,7 @@ install:
   - ps: (New-Object System.Net.WebClient).DownloadFile($urlCurrent, $tempFileCurrent)
   - ps: Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory($tempFileCurrent, $env:DOTNET_INSTALL_DIR)
   - ps: $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
-  #- choco install "msbuild-sonarqube-runner" -y
+  - choco install "msbuild-sonarqube-runner" -y
   - choco install "reportgenerator.portable" -y
 before_build:
   - cmd: dotnet --version
@@ -28,18 +28,19 @@ environment:
 clone_depth: 0
 #test_script: 
 on_finish :
-  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]* -[Moq]* -[Logging]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
+  #- cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]* -[Moq]* -[Logging]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
+  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
   #- git config --global credential.helper store
-  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlInline
+  #- cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlInline
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
-  - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.htm"
+  #- ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.htm"
   #- ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   #- cmd: git config --global user.email "chitpong@gmail.com"
   #- cmd: git config --global user.name "iFew"
   #- cmd: git add unit-results.xml
   #- cmd: git commit -m "Added Unit Test Report XML File"
   #- cmd: git push origin master 
-  #- MSBuild.SonarQube.Runner.exe begin /k:"test-dotnet-login" /d:"sonar.host.url=http://localhost" /n:"test-dotnet-login" /v:"1.0.0" /d:sonar.cs.opencover.reportsPaths="unit-results.xml"
-  #- msbuild /t:rebuild
-  #- MSBuild.SonarQube.Runner.exe end
+  - cmd: SonarQube.Scanner.MSBuild.exe begin /k:"sck-dotnet-api-login" /o:"sck-test" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="d5f81923c47958377fc21ce99de6b3f45130761d"
+  - cmd: MsBuild.exe /t:Rebuild
+  - cmd: SonarQube.Scanner.MSBuild.exe end /d:sonar.login="d5f81923c47958377fc21ce99de6b3f45130761d"
 deploy: off
