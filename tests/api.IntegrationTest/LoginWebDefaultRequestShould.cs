@@ -60,5 +60,24 @@ namespace api.IntegrationTest
       Assert.Equal("ERROR", results.Status);
       Assert.Equal("Username and Password are required.", results.Message);
     }
+
+    [Theory]
+    [InlineData("ploy","1234")]
+    [InlineData("nut","Sck1234")]
+    [InlineData("nut","1234")]
+    public async void ReturnErrorUserNotFoundGivenLoginInfoIncorrect(string username, string password)
+    {
+      var request = "/api/login";
+      String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";
+      HttpContent payload = new StringContent(jsonData, Encoding.UTF8, "application/json");
+      var response = await client.PostAsync(request, payload);
+      response.EnsureSuccessStatusCode();
+
+
+      ResponseMessage results = JsonConvert.DeserializeObject<ResponseMessage>(await response.Content.ReadAsStringAsync());
+
+      Assert.Equal("ERROR", results.Status);
+      Assert.Equal("User not found", results.Message);
+    }
   }
 } 
