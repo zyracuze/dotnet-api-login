@@ -288,3 +288,5 @@ __pycache__/
 *.xsd.cs
 
 .vscode
+tests/api.IntegrationTest/obj/*
+tests/api.UnitTest/obj/*
