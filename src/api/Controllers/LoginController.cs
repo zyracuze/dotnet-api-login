@@ -12,12 +12,12 @@ namespace api.Controllers
   [Route("api/login")]
   public class LoginController : Controller
   {
-     private readonly IAuthenticationService authenticationService;
+    private readonly IAuthenticationService authenticationService;
 
-        public LoginController(IAuthenticationService service)
-        {
-            authenticationService = service;
-        }
+    public LoginController(IAuthenticationService service)
+    {
+      authenticationService = service;
+    }
 
     [HttpPost()]
     public ResponseMessage Post([FromBody]User user)
@@ -32,7 +32,7 @@ namespace api.Controllers
         };
       }
 
-      User expected_user = authenticationService.Login(user.Username , user.Password);
+      User expected_user = authenticationService.Login(user.Username, user.Password);
       return new ResponseMessage()
       {
         Status = "OK",
