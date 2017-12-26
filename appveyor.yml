@@ -39,7 +39,7 @@ on_finish :
   #- cmd: git add unit-results.xml
   #- cmd: git commit -m "Added Unit Test Report XML File"
   #- cmd: git push origin master 
-  - MSBuild.SonarQube.Runner.exe begin /k:"dotnet-api--login" /d:"sonar.host.url=https://sonarcloud.io" /n:"dotnet-api-login" /o:d5f81923c47958377fc21ce99de6b3f45130761d /v:"1.0.0" /d:sonar.cs.opencover.reportsPaths="unit-results.xml"
+  - MSBuild.SonarQube.Runner.exe begin /k:"dotnet-api-login" /d:"sonar.host.url=https://sonarcloud.io" /n:"dotnet-api-login" /o:d5f81923c47958377fc21ce99de6b3f45130761d /v:"1.0.0" /d:sonar.cs.opencover.reportsPaths="unit-results.xml"
   - msbuild /t:rebuild
   - MSBuild.SonarQube.Runner.exe end
 deploy: off
