@@ -9,27 +9,38 @@ using api.Models;
 
 namespace api.Controllers
 {
-    [Route("api/login")]
-    public class LoginController : Controller
+  [Route("api/login")]
+  public class LoginController : Controller
+  {
+
+    [HttpPost()]
+    public ResponseMessage Post([FromBody]User user)
     {
 
-        [HttpPost()]
-        public ResponseMessage Post([FromBody]User user)
+      if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+      {
+        return new ResponseMessage()
         {
+          Status = "ERROR",
+          Message = "Username and Password are required."
+        };
+      }
 
-           User expected_user = new User(){
-               Id = 1,
-               Username = "ploy",
-               Displayname = "พลอย"
-           };
+      User expected_user = new User()
+      {
+        Id = 1,
+        Username = "ploy",
+        Displayname = "พลอย"
+      };
 
-                return new ResponseMessage(){
-                    Status = "OK",
-                    Results = expected_user
-                }; 
+      return new ResponseMessage()
+      {
+        Status = "OK",
+        Results = expected_user
+      };
 
 
 
-        }
     }
+  }
 }
