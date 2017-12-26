@@ -73,7 +73,6 @@ namespace api.IntegrationTest
       var response = await client.PostAsync(request, payload);
       response.EnsureSuccessStatusCode();
 
-
       ResponseMessage results = JsonConvert.DeserializeObject<ResponseMessage>(await response.Content.ReadAsStringAsync());
 
       Assert.Equal("ERROR", results.Status);

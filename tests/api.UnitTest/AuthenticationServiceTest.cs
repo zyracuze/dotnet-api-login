@@ -37,6 +37,35 @@ namespace api.UnitTest
 
     }
 
+    [Fact]
+    public void Login_ThrowExceptionUserNotFound_WhenUserLoginFail()
+    {
+      var username = "ploy";
+      var hashPassword = "Sck1234";
+
+      var expectedUser = new User(){
+          Id = 1,
+          Username = "ploy",
+          Displayname = "พลอย"
+      };
+
+      StubUserContextThrowException stubUserContextThrowException = new StubUserContextThrowException();
+      AuthenticationService authenticationService = new AuthenticationService(stubUserContextThrowException);
+
+      try
+      {
+
+        User actualUser = authenticationService.Login(username, hashPassword);
+        Assert.True(false, "UserNotFoundException was not thrown");
+
+      }
+      catch (UserNotFoundException)
+      {
+        // Assert
+        Assert.True(true);
+      }
+
+    }
 
   }
 }
