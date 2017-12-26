@@ -10,70 +10,46 @@ namespace api.UnitTest
     public class UserTest
     {
 
-       
-        public void Username_Must_Be_Required()
+        [Fact]
+        public void Username_Should_Not_Empty()
         {
             // Arrange
             var model = new User
             {
-                Username = ""
+                Username = string.Empty
             };
-
-            var context = new ValidationContext(model, null, null);
-            var result = new List<ValidationResult>();
+            string expectedMessage = "The Username field is required.";
 
             // Act
-            var valid = Validator.TryValidateObject(model, context, result, true);
+            var results = Validate(model);
 
-            Assert.False(valid);
-            var failure = Assert.Single(
-                result,
-                x => x.ErrorMessage == "The Username field is required.");
-            Assert.Single(failure.MemberNames, x => x == "Username");
+            // Assert
+            if (results.Count > 0)
+            {
+                Assert.True(CheckValidateValue(results, expectedMessage));
+            }
         }
 
-       
-        public void Username_Should_Not_Over_50_Characters()
+
+        private static IList<ValidationResult> Validate(object model)
         {
-            // Arrange
-            var model = new User
-            {
-                Username = new string('a', 49)
-            };
-
-            var context = new ValidationContext(model, null, null);
-            var result = new List<ValidationResult>();
-
-            // Act
-            var valid = Validator.TryValidateObject(model, context, result, true);
-
-            Assert.False(valid);
-            var failure = Assert.Single(
-                result,
-                x => x.ErrorMessage == "The field Username must be a string with a maximum length of 50.");
-            Assert.Single(failure.MemberNames, x => x == "Username");
+            var results = new List<ValidationResult>();
+            var validationContext = new ValidationContext(model, null, null);
+            Validator.TryValidateObject(model, validationContext, results, true);
+            if (model is IValidatableObject) (model as IValidatableObject).Validate(validationContext);
+            return results;
         }
 
-      
-        public void Username_Should_Over_4_Characters()
+        private static bool CheckValidateValue(IList<ValidationResult> results, string expectedMessage)
         {
-            // Arrange
-            var model = new User
+            foreach (ValidationResult message in results)
             {
-                Username = "pl0oy"
-            };
-
-            var context = new ValidationContext(model, null, null);
-            var result = new List<ValidationResult>();
-
-            // Act
-            var valid = Validator.TryValidateObject(model, context, result, true);
-
-            Assert.False(valid);
-            var failure = Assert.Single(
-                result,
-                x => x.ErrorMessage == "The field Username must be a string with a minimum length of 4.");
-            Assert.Single(failure.MemberNames, x => x == "Username");
+                if (message.ErrorMessage == expectedMessage)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
