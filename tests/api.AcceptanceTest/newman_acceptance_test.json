@@ -39,9 +39,9 @@
 					"raw": "{\n\t\"username\": \"ploy\",\n\t\"password\": \"Sck1234\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/login",
+					"raw": "0.0.0.0:5000/api/login",
 					"host": [
-						"http://localhost"
+						"0.0.0.0"
 					],
 					"port": "5000",
 					"path": [
