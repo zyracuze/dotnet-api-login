@@ -24,8 +24,8 @@ namespace api.UnitTest
           Displayname = "พลอย"
       };
 
-      StubUserContextSuccess stubUserContextSuccess = new StubUserContextSuccess();
-      AuthenticationService authenticationService = new AuthenticationService(stubUserContextSuccess);
+      StubSuccessUserContext stubSuccessUserContext = new StubSuccessUserContext();
+      AuthenticationService authenticationService = new AuthenticationService(stubSuccessUserContext);
 
       User actualUser = authenticationService.Login(username, hashPassword);
 
