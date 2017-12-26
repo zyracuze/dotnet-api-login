@@ -40,5 +40,24 @@ namespace api.IntegrationTest
       Assert.Equal("ploy", results.Results.Username);
       Assert.Equal("พลอย", results.Results.Displayname);
     }
+
+    [Theory]
+    [InlineData("","Sck1234")]
+    [InlineData("ploy","")]
+    [InlineData("","")]
+    public async void ReturnErrorRequireFieldGivenLoginInfoNotComplete(string username, string password)
+    {
+      var request = "/api/login";
+      String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";
+      HttpContent payload = new StringContent(jsonData, Encoding.UTF8, "application/json");
+      var response = await client.PostAsync(request, payload);
+      response.EnsureSuccessStatusCode();
+
+
+      ResponseMessage results = JsonConvert.DeserializeObject<ResponseMessage>(await response.Content.ReadAsStringAsync());
+
+      Assert.Equal("ERROR", results.Status);
+      Assert.Equal("Username and Password are required.", results.Message);
+    }
   }
 } 
