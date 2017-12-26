@@ -18,13 +18,13 @@ install:
   #- choco install "msbuild-sonarqube-runner" -y
   - choco install "reportgenerator.portable" -y
 before_build:
-  - cmd: dotnet --version
+  - cmd: dot#net --version
   - cmd: dotnet restore --verbosity m
 build_script:
-  - cmd: dotnet build --configuration Release /p:DebugType=full 
+  #- cmd: dotnet build --configuration Release /p:DebugType=full 
 environment:
-  access_token:
-    secure: HKBfg9ZUY5hZWv18s1AUz9DX+xBRkDvu6zzPplrx++zNr57hYv4GMSnmIdt1SPBm
+  #access_token:
+  #  secure: HKBfg9ZUY5hZWv18s1AUz9DX+xBRkDvu6zzPplrx++zNr57hYv4GMSnmIdt1SPBm
 clone_depth: 0
 #test_script: 
 on_finish :
