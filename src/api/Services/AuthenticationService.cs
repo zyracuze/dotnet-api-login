@@ -9,8 +9,8 @@ namespace api.Services
   public class AuthenticationService : IAuthenticationService
   {
 
-    private readonly UserContext userContext;
-    public AuthenticationService(UserContext userContext){
+    private readonly IUserContext userContext;
+    public AuthenticationService(IUserContext userContext){
         this.userContext = userContext;
     }
     private string EncryptPassword(string password)

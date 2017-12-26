@@ -5,7 +5,7 @@ using api.Exceptions;
 
 namespace api.Models
 {
-    public class UserContext : DbContext
+    public class UserContext : DbContext, IUserContext
     {
         public UserContext(DbContextOptions<UserContext> dbContextOptions) :
             base(dbContextOptions)
