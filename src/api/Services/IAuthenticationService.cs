@@ -3,9 +3,8 @@ using api.Models;
 
 namespace api.Services
 {
-    public interface IAuthenticationSrevice
+    public interface IAuthenticationService
     {
          User Login(string username, string password);
-         String EncryptPassword(string password);
     }
 }

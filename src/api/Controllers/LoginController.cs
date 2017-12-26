@@ -5,13 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using api.Models;
-
+using api.Services;
 
 namespace api.Controllers
 {
   [Route("api/login")]
   public class LoginController : Controller
   {
+     private readonly IAuthenticationService authenticationService;
+
+        public LoginController(IAuthenticationService service)
+        {
+            authenticationService = service;
+        }
 
     [HttpPost()]
     public ResponseMessage Post([FromBody]User user)
@@ -26,12 +32,7 @@ namespace api.Controllers
         };
       }
 
-      User expected_user = new User()
-      {
-        Id = 1,
-        Username = "ploy",
-        Displayname = "พลอย"
-      };
+      User expected_user = authenticationService.Login(user.Username , user.Password);
 
       return new ResponseMessage()
       {
