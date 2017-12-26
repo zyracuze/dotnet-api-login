@@ -33,15 +33,11 @@ namespace api.Controllers
       }
 
       User expected_user = authenticationService.Login(user.Username , user.Password);
-
       return new ResponseMessage()
       {
         Status = "OK",
         Results = expected_user
       };
-
-
-
     }
   }
 }
