@@ -1,8 +1,10 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
+using Moq;
 using api.Controllers;
 using api.Models;
+using api.Services;
 
 namespace api.UnitTest
 {
@@ -12,7 +14,17 @@ namespace api.UnitTest
     public void PostLogin_ResturnJSON_WhenLoginIsSuccessful()
     {
 
-      var loginController = new LoginController();
+      var mockRepo = new Mock<IAuthenticationService>();
+      mockRepo.Setup(repo => repo.Login(It.IsAny<string>(), It.IsAny<string>())).Returns(
+            new User()
+            {
+              Id = 1,
+              Username = "ploy",
+              Displayname = "พลอย"
+            }
+        );
+
+      var loginController = new LoginController(mockRepo.Object);
       var result = loginController.Post(new User()
       {
         Username = "ploy",
@@ -33,8 +45,17 @@ namespace api.UnitTest
     [InlineData("", "")]
     public void PostLogin_ResturnErrorRequireField_WhenLoginInfoHaveNullField(string username, string password)
     {
+      var mockRepo = new Mock<IAuthenticationService>();
+      mockRepo.Setup(repo => repo.Login(It.IsAny<string>(), It.IsAny<string>())).Returns(
+            new User()
+            {
+              Id = 1,
+              Username = "ploy",
+              Displayname = "พลอย"
+            }
+        );
 
-      var loginController = new LoginController();
+      var loginController = new LoginController(mockRepo.Object);
       var result = loginController.Post(new User()
       {
         Username = username,
@@ -47,6 +68,6 @@ namespace api.UnitTest
       Assert.Equal("Username and Password are required.", reponse.Message);
     }
 
-    
+
   }
 }
