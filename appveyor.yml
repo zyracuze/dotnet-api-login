@@ -16,28 +16,29 @@ install:
   - ps: Add-Type -AssemblyName System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::ExtractToDirectory($tempFileCurrent, $env:DOTNET_INSTALL_DIR)
   - ps: $env:Path = "$env:DOTNET_INSTALL_DIR;$env:Path"
   #- choco install "msbuild-sonarqube-runner" -y
+  - choco install "reportgenerator.portable" -y
 before_build:
-  - cmd: dotnet --version
+  - cmd: dot#net --version
   - cmd: dotnet restore --verbosity m
 build_script:
-  - cmd: dotnet build --configuration Release /p:DebugType=full 
+  #- cmd: dotnet build --configuration Release /p:DebugType=full 
 environment:
-  access_token:
-    secure: HKBfg9ZUY5hZWv18s1AUz9DX+xBRkDvu6zzPplrx++zNr57hYv4GMSnmIdt1SPBm
+  #access_token:
+  #  secure: HKBfg9ZUY5hZWv18s1AUz9DX+xBRkDvu6zzPplrx++zNr57hYv4GMSnmIdt1SPBm
 clone_depth: 0
 #test_script: 
 on_finish :
-  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -output:".\unit-results.xml" -oldstyle
+  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
   #- git config --global credential.helper store
-  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML
+  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlInline
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
-  - ps: Push-AppveyorArtifact ".\CodeCoverageHTML"
+  - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.htm"
   #- ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  #- git config --global user.email "chitpong@gmail.com"
-  #- git config --global user.name "iFew"
-  #- git add unit-results.xml
-  #- git commit -m "Added Unit Test Report XML File"
-  #- git push origin master 
+  #- cmd: git config --global user.email "chitpong@gmail.com"
+  #- cmd: git config --global user.name "iFew"
+  #- cmd: git add unit-results.xml
+  #- cmd: git commit -m "Added Unit Test Report XML File"
+  #- cmd: git push origin master 
   #- MSBuild.SonarQube.Runner.exe begin /k:"test-dotnet-login" /d:"sonar.host.url=http://localhost" /n:"test-dotnet-login" /v:"1.0.0" /d:sonar.cs.opencover.reportsPaths="unit-results.xml"
   #- msbuild /t:rebuild
   #- MSBuild.SonarQube.Runner.exe end
