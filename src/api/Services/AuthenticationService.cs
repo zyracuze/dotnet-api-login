@@ -35,13 +35,13 @@ namespace api.Services
       }
 
       string hashPassword = this.EncryptPassword(password);
+
       try
       {
           return userContext.FindUserByUsernameAndPassword(username, hashPassword);
       }
-      catch (System.Exception)
-      {
-          
+      catch (UserNotFoundException)
+      {   
           throw new UserNotFoundException("User not found");
       }
     }

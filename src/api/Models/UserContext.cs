@@ -17,7 +17,7 @@ namespace api.Models
         public User FindUserByUsernameAndPassword(string username, string hashPassword){
           try
           {
-              return this.Users.Single(u => u.Username == username && u.Password == hashPassword);
+              return this.Users.Where(u => u.Username == username && u.Password == hashPassword).First();
           }
           catch (System.Exception)
           {    

@@ -5,6 +5,7 @@ using Moq;
 using api.Controllers;
 using api.Models;
 using api.Services;
+using api.Exceptions;
 
 namespace api.UnitTest
 {
@@ -68,6 +69,26 @@ namespace api.UnitTest
       Assert.Equal("Username and Password are required.", reponse.Message);
     }
 
+    [Theory]
+    [InlineData("ploy", "1234")]
+    [InlineData("nut", "Sck1234")]
+    [InlineData("nut", "1234")]
+    public void PostLogin_ResturnErrorUserNotFound_WhenLoginInfoIsInCorrect(string username, string password)
+    {
+      StubFailAuthenticationService service = new StubFailAuthenticationService();
+
+      var loginController = new LoginController(service);
+      var result = loginController.Post(new User()
+      {
+        Username = username,
+        Password = password
+      });
+
+      var reponse = Assert.IsType<ResponseMessage>(result);
+
+      Assert.Equal("ERROR", reponse.Status);
+      Assert.Equal("User not found", reponse.Message);
+    }
 
   }
 }
