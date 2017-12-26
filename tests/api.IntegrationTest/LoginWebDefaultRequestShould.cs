@@ -1,10 +1,11 @@
 using System;
 using Xunit;
-
+using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 
 using System.Text;
 using Newtonsoft.Json;
@@ -20,7 +21,15 @@ namespace api.IntegrationTest
     public LoginWebDefaultRequestShould()
     {
       // Arrange
-      server = new TestServer(new WebHostBuilder().UseStartup<Startup>());
+      server = new TestServer(
+        new WebHostBuilder().UseEnvironment("Development").UseStartup<Startup>());
+        // .UseStartup<Startup>()
+        // .ConfigureServices( 
+        //   services => services.AddDbContext<UserContext>(
+        //     options => options.UseSqlite("Data Source=../../src/api/Databases/account.db")
+        //     ) 
+        //   )
+        // );
       client = server.CreateClient();
     }
 
@@ -32,7 +41,6 @@ namespace api.IntegrationTest
       HttpContent payload = new StringContent(jsonData, Encoding.UTF8, "application/json");
       var response = await client.PostAsync(request, payload);
       response.EnsureSuccessStatusCode();
-
 
       ResponseMessage results = JsonConvert.DeserializeObject<ResponseMessage>(await response.Content.ReadAsStringAsync());
 
