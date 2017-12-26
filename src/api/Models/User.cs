@@ -6,9 +6,6 @@ namespace api.Models
 {
     public class User
     {
-
-        [Required]
-        [StringLength(10)]
         public int Id { get; set; }
 
         [Required]
