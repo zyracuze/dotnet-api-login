@@ -1,21 +1,21 @@
 {
+	"variables": [],
 	"info": {
-		"name": "dotnet-api-login",
-		"_postman_id": "c250a036-55ef-38a9-4df7-81e754615c13",
+		"name": "dotnet-login",
+		"_postman_id": "50159e72-4800-e6d4-8024-7d6f23741e15",
 		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "login-success",
+			"name": "#1 user กรอก username and password ถูก",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "58830610-f53d-4ad5-8b31-d6d10cb1b405",
 						"type": "text/javascript",
 						"exec": [
-							"pm.test(\"Login Success\", function () {",
+							"pm.test(\"#1 Login Success\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.status).to.eql('OK');",
 							"    pm.expect(jsonData.results.id).to.eql(1);",
@@ -27,28 +27,230 @@
 				}
 			],
 			"request": {
+				"url": "http://localhost:5000/api/login",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"username\": \"ploy\",\n\t\"password\": \"Sck1234\"\n}"
 				},
-				"url": {
-					"raw": "0.0.0.0:5000/api/login",
-					"host": [
-						"0.0.0.0"
-					],
-					"port": "5000",
-					"path": [
-						"api",
-						"login"
-					]
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#2 user กรอก username ถูกต้อง และ  password ผิด",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#2 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('User not found');",
+							"});"
+						]
+					}
 				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"ploy\",\n\t\"password\": \"1234\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#3 user กรอก username ผิด แต่กรอก password ถูก",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#3 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('User not found');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"nut\",\n\t\"password\": \"Sck1234\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#4 user กรอกทั้ง username and password ผิด",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#4 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('User not found');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"nut\",\n\t\"password\": \"1234\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#5 user ไม่ได้กรอก username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#5 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('Username and Password are required.');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"\",\n\t\"password\": \"Sck1234\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#6 user ไม่ได้ใส่ password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#6 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('Username and Password are required.');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"ploy\",\n\t\"password\": \"\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "#7 user ไม่ได้ใส่ทั้ง username and password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"#7 Login Fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql('ERROR');",
+							"    pm.expect(jsonData.message).to.eql('Username and Password are required.');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:5000/api/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"\",\n\t\"password\": \"\"\n}"
+				},
+				"description": ""
 			},
 			"response": []
 		}
