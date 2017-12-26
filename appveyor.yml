@@ -30,7 +30,7 @@ clone_depth: 0
 on_finish :
   - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -output:".\unit-results.xml" -oldstyle
   #- git config --global credential.helper store
-  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:MHTML|XML
+  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:Mhtml;Xml
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
   - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.mhtml"
   - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.xml"
