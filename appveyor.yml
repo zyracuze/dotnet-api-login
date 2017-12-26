@@ -28,7 +28,7 @@ environment:
 clone_depth: 0
 #test_script: 
 on_finish :
-  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -output:".\unit-results.xml" -oldstyle
+  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -excludebyfile:"Startup.cs;Program.cs" -output:".\unit-results.xml" -oldstyle
   #- git config --global credential.helper store
   - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlInline
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
