@@ -23,13 +23,6 @@ namespace api.IntegrationTest
       // Arrange
       server = new TestServer(
         new WebHostBuilder().UseEnvironment("Development").UseStartup<Startup>());
-        // .UseStartup<Startup>()
-        // .ConfigureServices( 
-        //   services => services.AddDbContext<UserContext>(
-        //     options => options.UseSqlite("Data Source=../../src/api/Databases/account.db")
-        //     ) 
-        //   )
-        // );
       client = server.CreateClient();
     }
 
