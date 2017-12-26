@@ -33,12 +33,12 @@ on_finish :
   - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlSummary
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
   - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\summary.htm"
-  #- ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  #- git config --global user.email "chitpong@gmail.com"
-  #- git config --global user.name "iFew"
-  #- git add unit-results.xml
-  #- git commit -m "Added Unit Test Report XML File"
-  #- git push origin master 
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - cmd: git config --global user.email "chitpong@gmail.com"
+  - cmd: git config --global user.name "iFew"
+  #- cmd: git add unit-results.xml
+  #- cmd: git commit -m "Added Unit Test Report XML File"
+  #- cmd: git push origin master 
   #- MSBuild.SonarQube.Runner.exe begin /k:"test-dotnet-login" /d:"sonar.host.url=http://localhost" /n:"test-dotnet-login" /v:"1.0.0" /d:sonar.cs.opencover.reportsPaths="unit-results.xml"
   #- msbuild /t:rebuild
   #- MSBuild.SonarQube.Runner.exe end
