@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using api.Models;
 using api.Services;
+using api.Exceptions;
 
 namespace api.Controllers
 {
@@ -32,12 +33,26 @@ namespace api.Controllers
         };
       }
 
-      User expected_user = authenticationService.Login(user.Username, user.Password);
-      return new ResponseMessage()
+      try
       {
-        Status = "OK",
-        Results = expected_user
-      };
+        User expected_user = authenticationService.Login(user.Username, user.Password);
+
+        return new ResponseMessage()
+        {
+          Status = "OK",
+          Results = expected_user
+        };
+      }
+      catch (UserNotFoundException ex)
+      {
+
+        return new ResponseMessage()
+        {
+          Status = "ERROR",
+          Message = ex.Message
+        };
+      }
+
     }
   }
 }
