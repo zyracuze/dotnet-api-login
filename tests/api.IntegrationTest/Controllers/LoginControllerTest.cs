@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Newtonsoft.Json;
 using api.Models;
+using System.Threading.Tasks;
 
 namespace api.IntegrationTest.Controllers
 {
@@ -27,7 +28,7 @@ namespace api.IntegrationTest.Controllers
     }
 
     [Fact]
-    public async void Post_CorrectUser_ReturnsOKResponse()
+    public async Task Post_CorrectUser_ReturnsOKResponse()
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \"ploy\", \"password\": \"Sck1234\"}";
@@ -46,7 +47,7 @@ namespace api.IntegrationTest.Controllers
     [InlineData("","Sck1234")]
     [InlineData("ploy","")]
     [InlineData("","")]
-    public async void Post_NotExistUser_ReturnErrorRequireFieldResponse(string username, string password)
+    public async Task Post_NotExistUser_ReturnErrorRequireFieldResponse(string username, string password)
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";
@@ -65,7 +66,7 @@ namespace api.IntegrationTest.Controllers
     [InlineData("ploy","1234")]
     [InlineData("nut","Sck1234")]
     [InlineData("nut","1234")]
-    public async void Post_NotExistUser_ReturnErrorUserNotFoundResponse(string username, string password)
+    public async Task Post_NotExistUser_ReturnErrorUserNotFoundResponse(string username, string password)
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";
