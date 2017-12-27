@@ -2,8 +2,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using api.Models;
 using api.Exceptions;
+using api.Contexts;
 
-namespace api.Models
+
+namespace api.Contexts
 {
     public class UserContext : DbContext, IUserContext
     {

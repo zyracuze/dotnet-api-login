@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using api.Models;
 using api.Exceptions;
+using api.Contexts;
 
 namespace api.Services
 {

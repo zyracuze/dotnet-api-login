@@ -1,6 +1,7 @@
 using System;
+using api.Models;
 
-namespace api.Models
+namespace api.Contexts
 {
     public interface IUserContext
     {
