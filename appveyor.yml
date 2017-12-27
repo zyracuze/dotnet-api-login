@@ -1,13 +1,8 @@
 version: '1.0.{build}'
 image: Visual Studio 2017
-# branches:
-#   only:
-#   - sonar
 init:
-  # Good practise, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
-install:  
-  # Download .NET Core 2.0 Preview 2 SDK and add to PATH
+install: 
   - ps: $urlCurrent = "https://download.microsoft.com/download/F/A/A/FAAE9280-F410-458E-8819-279C5A68EDCF/dotnet-sdk-2.0.0-preview2-006497-win-x64.zip"
   - ps: $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetsdk"
   - ps: mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
@@ -20,27 +15,14 @@ install:
 before_build:
   - cmd: dotnet --version
   - cmd: dotnet restore --verbosity m
-build_script:
-  #- cmd: dotnet build --configuration Release /p:DebugType=full 
-environment:
-  access_token:
-    secure: HKBfg9ZUY5hZWv18s1AUz9DX+xBRkDvu6zzPplrx++zNr57hYv4GMSnmIdt1SPBm
 clone_depth: 0
-#test_script: 
-on_finish :
-  #- cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]* -[Moq]* -[Logging]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
-  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release --framework netcoreapp2.0" -filter:"+[*]*" -excludebyfile:"*\*Startup.cs;*\*Program.cs" -output:".\unit-results.xml" -oldstyle
-  #- git config --global credential.helper store
-  - cmd: ReportGenerator.exe -reports:unit-results.xml -targetDir:CodeCoverageHTML -reporttypes:HtmlInline
+test_script: 
+  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release /p:DebugType=Full --framework netcoreapp2.0" -filter:"+[*]api.* -[*]*Startup -[*]*Program" -output:".\unit-results.xml" -returntargetcode -oldstyle
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
-  - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\index.htm"
-  #- ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-  #- cmd: git config --global user.email "chitpong@gmail.com"
-  #- cmd: git config --global user.name "iFew"
-  #- cmd: git add unit-results.xml
-  #- cmd: git commit -m "Added Unit Test Report XML File"
-  #- cmd: git push origin master 
-  - cmd: SonarQube.Scanner.MSBuild.exe begin /k:"sck-dotnet-api-login" /o:"sck-test" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="d5f81923c47958377fc21ce99de6b3f45130761d"
+  - cmd: ReportGenerator.exe -reports:"unit-results.xml" -targetdir:"CodeCoverageHTML" -reporttypes:HtmlSummary
+  - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\summary.htm"
+on_finish :
+  - cmd: SonarQube.Scanner.MSBuild.exe begin /k:"sck-dotnet-api-login" /o:"sck-test" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.login="d5f81923c47958377fc21ce99de6b3f45130761d" /d:sonar.cs.opencover.reportsPaths=".\unit-results.xml"
   - cmd: MsBuild.exe /t:Rebuild
   - cmd: SonarQube.Scanner.MSBuild.exe end /d:sonar.login="d5f81923c47958377fc21ce99de6b3f45130761d"
 deploy: off
