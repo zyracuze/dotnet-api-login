@@ -17,7 +17,7 @@ before_build:
   - cmd: dotnet restore --verbosity m
 clone_depth: 0
 test_script: 
-  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release /p:DebugType=Full --framework netcoreapp2.0" -filter:"+[*]api.* -[*]*Startup -[*]*Program -[*Test]*" -output:".\unit-results.xml" -returntargetcode -oldstyle
+  - cmd: OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --configuration Release /p:DebugType=Full --framework netcoreapp2.0" -filter:"+[*]api.* -[*]api.UnitTest -[*]api.IntegrationTest -[*]api.AcceptanceTest -[*]*Startup -[*]*Program" -output:".\unit-results.xml" -returntargetcode -oldstyle
   - ps: Push-AppveyorArtifact ".\unit-results.xml"
   - cmd: ReportGenerator.exe -reports:"unit-results.xml" -targetdir:"CodeCoverageHTML" -reporttypes:HtmlSummary
   - ps: Push-AppveyorArtifact ".\CodeCoverageHTML\summary.htm"
