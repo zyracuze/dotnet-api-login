@@ -11,7 +11,7 @@ namespace api.UnitTest.Services
   public class AuthenticationServiceTest
   {
     [Fact]
-    public void Login_ReturnUserModel_WhenUserLoginSuccess()
+    public void Login_CorrectUser_ReturnsExpectedUser()
     {
       var username = "ploy";
       var hashPassword = "2ebaee7d310c99cb38e069a7014d64bd4b043caa1646489bdc4b5f07f3479585";
@@ -36,7 +36,7 @@ namespace api.UnitTest.Services
     }
 
     [Fact]
-    public void Login_ThrowExceptionUserNotFound_WhenUserLoginFail()
+    public void Login_NotExistUser_ThrowExceptionUserNotFound()
     {
       var username = "ploy";
       var hashPassword = "Sck1234";
@@ -68,7 +68,7 @@ namespace api.UnitTest.Services
     [Theory]
     [InlineData("","Sck1234")]
     [InlineData("ploy","")]
-    public void Login_ThrowArgumentException_WhenUsernameOrPasswordIsEmpty(string username, string hashPassword)
+    public void Login_NotExistUser_ThrowArgumentException(string username, string hashPassword)
     {
       StubSuccessUserContext stubSuccessUserContext = new StubSuccessUserContext();
       AuthenticationService authenticationService = new AuthenticationService(stubSuccessUserContext);
