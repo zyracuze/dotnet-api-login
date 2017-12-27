@@ -1,7 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
-using Moq;
 using api.Controllers;
 using api.Models;
 using api.Services;
