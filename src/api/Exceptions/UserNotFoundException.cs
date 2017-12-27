@@ -1,8 +1,12 @@
 using System;
+using System.Runtime.Serialization;
+
 namespace api.Exceptions
 {
-    public class UserNotFoundException : Exception
+    [Serializable]
+    public class UserNotFoundException : Exception, ISerializable
     {
-        public UserNotFoundException(string message): base(message){}
+        protected UserNotFoundException(SerializationInfo info, StreamingContext context){}
+        public UserNotFoundException(string message) : base(message) { }
     }
 }
