@@ -21,4 +21,7 @@
   <ItemGroup>
     <None Remove="TestResults\_Kurozakizzs-MacBook-Pro_2017-12-27_11_55_29.trx" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="LoginControllerTest.cs" />
+  </ItemGroup>
 </Project>
