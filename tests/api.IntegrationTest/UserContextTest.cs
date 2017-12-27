@@ -3,6 +3,7 @@ using Xunit;
 using api.Models;
 using Microsoft.EntityFrameworkCore;
 using api.Exceptions;
+using api.Contexts;
 
 namespace api.UnitTest
 {
