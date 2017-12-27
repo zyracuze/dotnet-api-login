@@ -7,7 +7,7 @@ using api.Contexts;
 
 namespace api.Services
 {
-  public class AuthenticationService : IAuthenticationService
+  public class AuthenticationService
   {
 
     private readonly IUserContext userContext;

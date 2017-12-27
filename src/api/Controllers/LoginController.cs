@@ -13,9 +13,9 @@ namespace api.Controllers
   [Route("api/login")]
   public class LoginController : Controller
   {
-    private readonly IAuthenticationService authenticationService;
+    private readonly AuthenticationService authenticationService;
 
-    public LoginController(IAuthenticationService service)
+    public LoginController(AuthenticationService service)
     {
       authenticationService = service;
     }

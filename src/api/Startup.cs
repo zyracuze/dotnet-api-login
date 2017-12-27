@@ -30,7 +30,7 @@ namespace api
         {
             string projectPath = AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin"));
             services.AddDbContext<UserContext>(options => options.UseSqlite("Data Source="+ projectPath +"Databases/account.db"));
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<AuthenticationService, AuthenticationService>();
             services.AddScoped<IUserContext, UserContext>();
             services.AddMvc();
         }
