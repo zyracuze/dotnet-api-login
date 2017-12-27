@@ -24,4 +24,9 @@
   <ItemGroup>
     <Compile Remove="LoginControllerTest.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Contexts\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

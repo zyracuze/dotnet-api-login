@@ -1,8 +1,6 @@
-using System;
-using api.Services;
 using api.Models;
 
-namespace api.UnitTest
+namespace api.UnitTest.Contexts
 {
   public class StubSuccessUserContext : IUserContext
   {

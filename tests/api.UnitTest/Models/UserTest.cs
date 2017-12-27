@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using api.Models;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Xunit;
 
-namespace api.UnitTest
+namespace api.UnitTest.Models
 {
   public class UserTest
   {

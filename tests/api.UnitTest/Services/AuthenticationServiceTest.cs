@@ -1,12 +1,11 @@
 using System;
-using Microsoft.AspNetCore.Mvc;
 using Xunit;
-using api.Controllers;
 using api.Models;
 using api.Services;
 using api.Exceptions;
+using api.UnitTest.Contexts;
 
-namespace api.UnitTest
+namespace api.UnitTest.Services
 {
 
   public class AuthenticationServiceTest
@@ -48,7 +47,7 @@ namespace api.UnitTest
           Displayname = "พลอย"
       };
 
-      StubUserContextThrowException stubUserContextThrowException = new StubUserContextThrowException();
+      StubThrowExceptionUserContext stubUserContextThrowException = new StubThrowExceptionUserContext();
       AuthenticationService authenticationService = new AuthenticationService(stubUserContextThrowException);
 
       try

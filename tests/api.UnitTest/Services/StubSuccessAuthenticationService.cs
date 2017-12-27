@@ -1,7 +1,7 @@
 using api.Models;
 using api.Services;
 
-namespace api.UnitTest
+namespace api.UnitTest.Services
 {
   public class StubSuccessAuthenticationService : IAuthenticationService
   {

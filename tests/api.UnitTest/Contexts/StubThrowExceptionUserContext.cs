@@ -1,11 +1,9 @@
-using System;
-using api.Services;
 using api.Models;
 using api.Exceptions;
 
-namespace api.UnitTest
+namespace api.UnitTest.Contexts
 {
-  public class StubUserContextThrowException : IUserContext
+  public class StubThrowExceptionUserContext : IUserContext
   {
     public User FindUserByUsernameAndPassword(string username, string hashPassword)
     {
