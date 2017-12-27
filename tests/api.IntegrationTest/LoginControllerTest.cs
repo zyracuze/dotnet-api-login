@@ -13,12 +13,12 @@ using api.Models;
 
 namespace api.IntegrationTest
 {
-  public class LoginWebDefaultRequestShould
+  public class LoginControllerTest
   {
     private readonly TestServer server;
     private readonly HttpClient client;
 
-    public LoginWebDefaultRequestShould()
+    public LoginControllerTest()
     {
       // Arrange
       server = new TestServer(
