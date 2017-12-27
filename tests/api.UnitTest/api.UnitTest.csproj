@@ -23,6 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="LoginControllerTest.cs" />
+    <Compile Remove="Services\StubFailAuthicationService.cs" />
+    <Compile Remove="Services\StubSuccessAuthenticationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
