@@ -43,4 +43,4 @@ http://139.59.108.209:8080/view/Dotnet-api-login/
 https://sonarcloud.io/dashboard?id=sck-dotnet-api-login
 
 # Login API Endpoint
-http://139.59.108.209:5000/api/login
+http://128.199.249.22:5000/api/login
