@@ -1,7 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
-using Moq;
 using api.Controllers;
 using api.Models;
 using api.Services;
@@ -24,8 +23,8 @@ namespace api.UnitTest
           Displayname = "พลอย"
       };
 
-      StubUserContextSuccess stubUserContextSuccess = new StubUserContextSuccess();
-      AuthenticationService authenticationService = new AuthenticationService(stubUserContextSuccess);
+      StubSuccessUserContext stubSuccessUserContext = new StubSuccessUserContext();
+      AuthenticationService authenticationService = new AuthenticationService(stubSuccessUserContext);
 
       User actualUser = authenticationService.Login(username, hashPassword);
 

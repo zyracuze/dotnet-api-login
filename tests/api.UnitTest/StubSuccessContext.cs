@@ -4,7 +4,7 @@ using api.Models;
 
 namespace api.UnitTest
 {
-  public class StubUserContextSuccess : IUserContext
+  public class StubSuccessUserContext : IUserContext
   {
     public User FindUserByUsernameAndPassword(string username, string hashPassword)
     {
