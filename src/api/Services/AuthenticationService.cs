@@ -7,44 +7,50 @@ using api.Contexts;
 
 namespace api.Services
 {
-  public class AuthenticationService
-  {
-
-    private readonly IUserContext userContext;
-    public AuthenticationService(IUserContext userContext){
-        this.userContext = userContext;
-    }
-    private string EncryptPassword(string password)
-    {
-      StringBuilder sb = new StringBuilder();
-
-      using (var hash = SHA256.Create())
-      {
-        Byte[] result = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-        foreach (Byte b in result)
-          sb.Append(b.ToString("x2"));
-      }
-      return sb.ToString();
-    }
-
-    public User Login(string username, string password)
+    public class AuthenticationService
     {
 
-      if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-      {
-        throw new ArgumentException();
-      }
+        private readonly IUserContext userContext;
+        public AuthenticationService(IUserContext userContext)
+        {
+            this.userContext = userContext;
+        }
+        private string EncryptPassword(string password)
+        {
+            StringBuilder sb = new StringBuilder();
 
-      string hashPassword = this.EncryptPassword(password);
+            using (var hash = SHA256.Create())
+            {
+                Byte[] result = hash.ComputeHash(Encoding.UTF8.GetBytes(password));
+                foreach (Byte b in result)
+                    sb.Append(b.ToString("x2"));
+            }
+            return sb.ToString();
+        }
 
-      try
-      {
-          return userContext.FindUserByUsernameAndPassword(username, hashPassword);
-      }
-      catch (UserNotFoundException)
-      {   
-          throw new UserNotFoundException("User not found");
-      }
+        public User Login(string username, string password)
+        {
+
+            if (IsUsernameOrPasswordEmpty(username, password))
+            {
+                throw new ArgumentException();
+            }
+
+            string hashPassword = this.EncryptPassword(password);
+
+            try
+            {
+                return userContext.FindUserByUsernameAndPassword(username, hashPassword);
+            }
+            catch (UserNotFoundException)
+            {
+                throw new UserNotFoundException("User not found");
+            }
+        }
+
+        public bool IsUsernameOrPasswordEmpty(string username, string password)
+        {
+            return string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password);
+        }
     }
-  }
 }
