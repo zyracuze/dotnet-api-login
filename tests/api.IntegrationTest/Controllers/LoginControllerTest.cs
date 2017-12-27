@@ -27,7 +27,7 @@ namespace api.IntegrationTest.Controllers
     }
 
     [Fact]
-    public async void ReturnUserInfoGivenLoginInfo()
+    public async void Post_CorrectUser_ReturnsOKResponse()
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \"ploy\", \"password\": \"Sck1234\"}";
@@ -46,7 +46,7 @@ namespace api.IntegrationTest.Controllers
     [InlineData("","Sck1234")]
     [InlineData("ploy","")]
     [InlineData("","")]
-    public async void ReturnErrorRequireFieldGivenLoginInfoNotComplete(string username, string password)
+    public async void Post_NotExistUser_ReturnErrorRequireFieldResponse(string username, string password)
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";
@@ -65,7 +65,7 @@ namespace api.IntegrationTest.Controllers
     [InlineData("ploy","1234")]
     [InlineData("nut","Sck1234")]
     [InlineData("nut","1234")]
-    public async void ReturnErrorUserNotFoundGivenLoginInfoIncorrect(string username, string password)
+    public async void Post_NotExistUser_ReturnErrorUserNotFoundResponse(string username, string password)
     {
       var request = "/api/login";
       String jsonData = "{ \"username\": \""+username+"\", \"password\": \""+password+"\"}";

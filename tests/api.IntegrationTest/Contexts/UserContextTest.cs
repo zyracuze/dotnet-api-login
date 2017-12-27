@@ -10,7 +10,7 @@ namespace api.IntegrationTest.Contexts
   public class UserContextTest
   {
     [Fact]
-    public void FindUserByUsernameAndPassword_GoodUser_ReturnsExpectedUser()
+    public void FindUserByUsernameAndPassword_CorrectUser_ReturnsExpectedUser()
     {
       // Arrange
       var options = new DbContextOptionsBuilder<UserContext>()
@@ -46,7 +46,7 @@ namespace api.IntegrationTest.Contexts
     }
 
     [Fact]
-    public void FindUserByUsernameAndPassword_BadUser_ThrowUserNotFoundException()
+    public void FindUserByUsernameAndPassword_NotExistUser_ThrowUserNotFoundException()
     {
       // Arrange
       var options = new DbContextOptionsBuilder<UserContext>()
