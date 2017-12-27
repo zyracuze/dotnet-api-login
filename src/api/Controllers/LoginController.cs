@@ -24,35 +24,43 @@ namespace api.Controllers
     public ResponseMessage Post([FromBody]User user)
     {
 
-      if (string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+      if (UsernameOrPasswordIsEmpty(user.Username, user.Password))
       {
-        return new ResponseMessage()
-        {
-          Status = "ERROR",
-          Message = "Username and Password are required."
-        };
+        return GenerateResponseMessage("ERROR", "Username and Password are required.");
       }
 
       try
       {
-        User expected_user = authenticationService.Login(user.Username, user.Password);
-
-        return new ResponseMessage()
-        {
-          Status = "OK",
-          Results = expected_user
-        };
+        User resultUser = authenticationService.Login(user.Username, user.Password);
+        return GenerateResponseMessage("OK", resultUser);
       }
       catch (UserNotFoundException ex)
       {
-
-        return new ResponseMessage()
-        {
-          Status = "ERROR",
-          Message = ex.Message
-        };
+        return GenerateResponseMessage("ERROR", ex.Message);
       }
 
+    }
+
+    private bool UsernameOrPasswordIsEmpty(string username, string password)
+    {
+      return string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password);
+    }
+
+    private ResponseMessage GenerateResponseMessage(string status, string message)
+    {
+      return new ResponseMessage()
+        {
+          Status = status ,
+          Message = message
+        };
+    }
+    private ResponseMessage GenerateResponseMessage(string status, User user)
+    {
+      return new ResponseMessage()
+        {
+          Status = status ,
+          Results = user 
+        };
     }
   }
 }
