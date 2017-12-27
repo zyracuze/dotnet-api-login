@@ -66,12 +66,11 @@ namespace api.UnitTest
 
     }
 
-    [Fact]
-    public void Login_ThrowArgumentException_WhenUsernameIsEmpty()
+    [Theory]
+    [InlineData("","Sck1234")]
+    [InlineData("ploy","")]
+    public void Login_ThrowArgumentException_WhenUsernameOrPasswordIsEmpty(string username, string hashPassword)
     {
-      var username = "";
-      var hashPassword = "Sck1234";
-
       StubSuccessUserContext stubSuccessUserContext = new StubSuccessUserContext();
       AuthenticationService authenticationService = new AuthenticationService(stubSuccessUserContext);
 
@@ -85,8 +84,7 @@ namespace api.UnitTest
         // Assert
         Assert.True(true);
       }
-
     }
-
+    
   }
 }
