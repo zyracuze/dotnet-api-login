@@ -66,5 +66,27 @@ namespace api.UnitTest
 
     }
 
+    [Fact]
+    public void Login_ThrowArgumentException_WhenUsernameIsEmpty()
+    {
+      var username = "";
+      var hashPassword = "Sck1234";
+
+      StubSuccessUserContext stubSuccessUserContext = new StubSuccessUserContext();
+      AuthenticationService authenticationService = new AuthenticationService(stubSuccessUserContext);
+
+      try
+      {
+        User actualUser = authenticationService.Login(username, hashPassword);
+        Assert.True(false, "ArgumentException was not thrown");
+      }
+      catch (ArgumentException)
+      {
+        // Assert
+        Assert.True(true);
+      }
+
+    }
+
   }
 }
