@@ -42,5 +42,8 @@ http://139.59.108.209:8080/view/Dotnet-api-login/
 # Coverage Report
 https://sonarcloud.io/dashboard?id=sck-dotnet-api-login
 
+# AppVeyor
+https://ci.appveyor.com/project/ifew/dotnet-api-login
+
 # Login API Endpoint
 http://128.199.249.22:5000/api/login
