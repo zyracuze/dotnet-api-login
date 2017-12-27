@@ -2,7 +2,7 @@
 	"variables": [],
 	"info": {
 		"name": "dotnet-login",
-		"_postman_id": "50159e72-4800-e6d4-8024-7d6f23741e15",
+		"_postman_id": "8b5aa074-13f3-24d0-a127-45bc3d2b6ddf",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -32,7 +32,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -67,7 +67,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -102,7 +102,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -137,7 +137,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -172,7 +172,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -207,7 +207,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
@@ -242,7 +242,7 @@
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
+						"value": "application/json; charset=UTF-8;",
 						"description": ""
 					}
 				],
