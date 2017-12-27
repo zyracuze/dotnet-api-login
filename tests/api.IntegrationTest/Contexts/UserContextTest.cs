@@ -4,7 +4,7 @@ using api.Models;
 using Microsoft.EntityFrameworkCore;
 using api.Exceptions;
 
-namespace api.UnitTest
+namespace api.IntegrationTest.Contexts
 {
   public class UserContextTest
   {

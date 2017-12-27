@@ -11,7 +11,7 @@ using System.Text;
 using Newtonsoft.Json;
 using api.Models;
 
-namespace api.IntegrationTest
+namespace api.IntegrationTest.Controllers
 {
   public class LoginControllerTest
   {

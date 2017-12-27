@@ -20,4 +20,8 @@
   <ItemGroup>
     <None Remove="TestResults\_Kurozakizzs-MacBook-Pro_2017-12-27_11_55_31.trx" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Contexts\" />
+  </ItemGroup>
 </Project>
